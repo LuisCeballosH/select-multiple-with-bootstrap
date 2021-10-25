@@ -1,0 +1,56 @@
+<div class="mb-2 select-custom select-custom-inside d-flex">
+    <div class="d-flex align-items-center flex-grow-1 flex-wrap select-custom-inside" (click)="showOptions()">
+        <ng-container *ngIf="visibleItem">
+            <span class="badge bg-info text-dark rounded-pill d-inline-block me-1 select-custom-inside"
+                *ngFor="let item of selectedItems | slice:0:visibleItem">
+                <span class="d-inline-block me-1 select-custom-inside">
+                    {{item.name[label]}}
+                </span>
+                <button type="button" class="btn-close select-custom-inside" (click)="deleteItem(item)">
+                </button>
+            </span>
+        </ng-container>
+        <ng-container *ngIf="!visibleItem">
+            <span class="badge bg-info text-dark rounded-pill d-inline-block me-1 select-custom-inside"
+                *ngFor="let item of selectedItems">
+                <span class="d-inline-block me-1 select-custom-inside">
+                    {{item.name[label]}}
+                </span>
+                <button type="button" class="btn-close select-custom-inside" (click)="deleteItem(item)">
+                </button>
+            </span>
+        </ng-container>
+        <span class="badge bg-info text-dark rounded-pill d-inline-block me-1 select-custom-inside"
+            style="cursor: pointer;" *ngIf="visibleItem && selectedItems.length > visibleItem"
+            (click)="visibleItem = maxSelection">
+            {{selectedItems.length - visibleItem}} +
+        </span>
+        <div class="flex-grow-1 select-custom-inside">
+            <input class="form-control select-custom-inside" #inputSearch type="text" [(ngModel)]="search"
+                (ngModelChange)="onSearch()">
+        </div>
+    </div>
+    <div class="ms-2 select-custom-inside">
+        <button type="button" class="btn btn-link text-dark p-0 select-custom-inside" (click)="clear()">
+            <em class="bi bi-x select-custom-inside" *ngIf="selectedItems.length && clearable"></em>
+        </button>
+    </div>
+    <div class="ms-2 select-custom-inside">
+        <button type="button" class="btn btn-link text-dark p-0 select-custom-inside" (click)="showOptions()">
+            <em class="bi bi-caret-down-fill select-custom-inside" *ngIf="!show"></em>
+            <em class="bi bi-caret-up-fill select-custom-inside" *ngIf="show"></em>
+        </button>
+    </div>
+</div>
+<span *ngIf="!show && maxSelection">
+    Max. {{maxSelection}} Opciones
+</span>
+<div class="list-options select-custom-inside" *ngIf="show">
+    <div class="options select-custom-inside">
+        <ul class="list-group select-custom-inside">
+            <li class="list-group-item select-custom-inside" *ngFor="let item of filteredData" (click)="addItem(item)">
+                {{item.name[label]}}
+            </li>
+        </ul>
+    </div>
+</div>

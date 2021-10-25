@@ -1,0 +1,2 @@
+export interface Select2 {
+}
